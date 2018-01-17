@@ -6,6 +6,6 @@ unofficial repo with sourcecode from https://sourceforge.net/projects/npp-plugin
 Build Status
 ------------
 
-AppVeyor `VS2013` and `VS2015`  [![Build status](https://ci.appveyor.com/api/projects/status/x8j5dnfur93n6six?svg=true)](https://ci.appveyor.com/project/chcg/npp-hexedit)
+AppVeyor `VS2015` and `VS2017`  [![Build status](https://ci.appveyor.com/api/projects/status/hl3cd4t18pabsmq8?svg=true)](https://ci.appveyor.com/project/chcg/nppdocshare)
 
 
