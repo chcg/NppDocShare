@@ -18,8 +18,8 @@ More help:
 -	-
 Check the forums for common issues and create a new message.
 If you like to submit a bug, please check if you have the latest and greatest version,
-if it isnt already submitted (I hate duplicates) and if you can give a clear description.
-(Unfortunatly, just saying 'It crashed with code 0xABCXYZ' isnt going to help much, the action
+if it isn't already submitted (I hate duplicates) and if you can give a clear description.
+(Unfortunately, just saying 'It crashed with code 0xABCXYZ' isn't going to help much, the action
 that led to the issue is far more valuable). A good way to reproduce the error is the best, 
 fastest and easiest way to solve it.
 
@@ -38,8 +38,8 @@ conflicts).
 -Crappy chat interface (There are IM clients that do this job much better, its just there for
 completeness).
 -Crappy overall interface.
-Dont ask for any of this, when I get to it I try to add it, I'm jsut beginning :)
+Don't ask for any of this, when I get to it I try to add it, I'm just beginning :)
 
-This thing was made as a fun project. Therefore, I try to make it work right, but dont expect
+This thing was made as a fun project. Therefore, I try to make it work right, but don't expect
 miracles (there are other collaborative editors out there that were specifically designed 
-from the ground up as such, but they lacked a little thing, they arent Notepad++ :]).
+from the ground up as such, but they lacked a little thing, they aren't Notepad++ :]).
