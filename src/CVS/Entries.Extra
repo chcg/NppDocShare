@@ -1,0 +1,15 @@
+D/bitmaps///////
+D/Failed///////
+D/Network///////
+D/Notepad_specific///////
+D/Utilities///////
+/DocView.cpp////*///
+/DocView.h////*///
+/NppDocShare.cpp////*///
+/NppDocShare.h////*///
+/NppDocShare.rc////*///
+/Packet.cpp////*///
+/Packet.h////*///
+/PacketQueue.cpp////*///
+/PacketQueue.h////*///
+/resource.h////*///
