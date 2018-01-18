@@ -212,7 +212,7 @@ DWORD WINAPI waitForClient(LPVOID param);
 DWORD WINAPI connectToServer(LPVOID param);
 
 //Window functions
-BOOL CALLBACK ShareDialogLoop(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+INT_PTR CALLBACK ShareDialogLoop(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 LRESULT ChatEditProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 //Helper funcs

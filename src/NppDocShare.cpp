@@ -857,7 +857,7 @@ void registerDockableDialog() {
 	SendMessage(nppData._nppHandle,NPPM_DMMREGASDCKDLG,0,(LPARAM)&tbd);	//Register it
 }
 
-BOOL CALLBACK ShareDialogLoop(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
+INT_PTR CALLBACK ShareDialogLoop(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 	bool hold = false;
 	switch(uMsg) {
 		case WM_INITDIALOG: {
@@ -870,7 +870,7 @@ BOOL CALLBACK ShareDialogLoop(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam
 			::SendMessage(hWnd, WM_STATUSMESSAGE, 0, (LPARAM)TEXT("Disconnected"));
 
 			HWND hEditChat = ::GetDlgItem(hWnd, IDC_EDIT_MSG);
-			lpOldProc = (WNDPROC)::SetWindowLongPtr(hEditChat, GWL_WNDPROC, (LONG_PTR)(WNDPROC)&ChatEditProc);
+			lpOldProc = (WNDPROC)::SetWindowLongPtr(hEditChat, GWLP_WNDPROC, (LONG_PTR)(WNDPROC)&ChatEditProc);
 			return TRUE;
 			break; }
 		case WM_NOTIFY: {
@@ -1086,7 +1086,7 @@ void Error(LPTSTR lpszFunction) {
 	FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER|FORMAT_MESSAGE_FROM_SYSTEM|FORMAT_MESSAGE_IGNORE_INSERTS,NULL,dw,MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),(LPTSTR) &lpMsgBuf,0, NULL );
 
 	lpDisplayBuf = (LPVOID)LocalAlloc(LMEM_ZEROINIT,(lstrlen((LPCTSTR)lpMsgBuf)+lstrlen((LPCTSTR)lpszFunction)+40)*sizeof(TCHAR)); 
-	wsprintf((LPTSTR)lpDisplayBuf,TEXT("%s failed with error %d: %s"),lpszFunction, dw, lpMsgBuf); 
+	wsprintf((LPTSTR)lpDisplayBuf,TEXT("%s failed with error %d: %s"),lpszFunction, dw, (LPCTSTR)lpMsgBuf);
 
 	MessageBox(NULL, (LPCTSTR)lpDisplayBuf, TEXT("NppDocShare Error"), MB_OK); 
 

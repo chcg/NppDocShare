@@ -31,7 +31,7 @@ build_script:
     - msbuild NppDocShare.vcxproj /m /p:configuration="%configuration%" /p:platform="%platform_input%" /p:PlatformToolset="%PlatformToolset%" /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
 
 after_build:
-    - cd "%APPVEYOR_BUILD_FOLDER%"
+    - cd "%APPVEYOR_BUILD_FOLDER%"\build
     - ps: >-
 
         if ($env:PLATFORM_INPUT -eq "x64") {
