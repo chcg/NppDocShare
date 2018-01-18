@@ -259,7 +259,7 @@ bool DocView::performExternalEvent(DocEvent * externalEvent) {
 		return false;
 
 	int position = externalEvent->position;
-	int length = externalEvent->length;
+	//int length = externalEvent->length;
 
 	DocRange * curRange = findRangeByposition(position, true);			//range that receives new pointer
 
@@ -306,7 +306,7 @@ bool DocView::performExternalInsert(DocRange * local, DocRange * external) {
 	//We might have to deal with inserted text
 	//If we have do not have precedence, just dump the text as it comes first
 	//Otherwise, find the first non-inserted block and insert there
-	DocRange * retRange = local;
+	//UNUSED DocRange * retRange = local;
 
 	if (local->type == DocRangeLocalDelete) {
 		local->prevRange->setNextRange(external);

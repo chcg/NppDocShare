@@ -176,7 +176,7 @@ extern "C" __declspec(dllexport) void beNotified(SCNotification *notifyCode) {
 	return;
 }
 
-extern "C" __declspec(dllexport) LRESULT messageProc(UINT Message, WPARAM wParam, LPARAM lParam) {
+extern "C" __declspec(dllexport) LRESULT messageProc(UINT /*Message*/, WPARAM /*wParam*/, LPARAM /*lParam*/) {
 	return TRUE;
 }
 
@@ -487,13 +487,13 @@ void performPacket(Socket * sock, Packet * packet) {
 			FilePacket * filePacket = (FilePacket*)packet;
 
 		#ifdef UNICODE
-			::SendMessage(nppData._nppHandle, NPPM_SETFILENAME, (WPARAM)shareBufferID, (LPARAM)filePacket->getName());
+			//::SendMessage(nppData._nppHandle, NPPM_INTERNAL_SETFILENAME, (WPARAM)shareBufferID, (LPARAM)filePacket->getName());
 		#else
 			//int len = stringLenW((wchar_t*)textData);
 			int len = ::WideCharToMultiByte(CP_ACP, 0, filePacket->getName(), -1, NULL, 0, NULL, NULL);
 			char * ansiName = new char[len+1];
 			::WideCharToMultiByte(CP_ACP, 0, filePacket->getName(), -1, ansiName, len+1, NULL, NULL);
-			::SendMessage(nppData._nppHandle, NPPM_SETFILENAME, (WPARAM)shareBufferID, (LPARAM)ansiName);
+			::SendMessage(nppData._nppHandle, NPPM_INTERNAL_SETFILENAME, (WPARAM)shareBufferID, (LPARAM)ansiName);
 			delete [] ansiName;
 		#endif
 
@@ -788,7 +788,7 @@ void newClient(int slot, const char * name) {
 	::SendMessage(hDialog, WM_CLIENTSTATUS, (WPARAM)TRUE, (LPARAM)name);
 }
 
-void disconnectClient(int slot, const char * name) {
+void disconnectClient(int /*slot*/, const char * name) {
 	//update w/e needed
 	::SendMessage(hDialog, WM_CLIENTSTATUS, (WPARAM)FALSE, (LPARAM)name);
 }
@@ -1109,7 +1109,7 @@ BOOL createDirectory(LPCTSTR path) {
 	BOOL last = FALSE;
 	DWORD res = 0;
 	parsedPath[0] = 0;
-	int i = 0, lastoffset = 0;
+	int i = 0;
 	LPCTSTR curStringOffset = path;
 	LPCTSTR prevStringOffset = path;
 	while(*curStringOffset != 0) {
