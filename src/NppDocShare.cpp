@@ -17,7 +17,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-//Upon connection, the server immediatly sends the entire file
+//Upon connection, the server immediately sends the entire file
 //Any changes made during the transfer will be stored and send later on
 //On the client side, the downloaded document will be a new one, but the name will be set to the server file name
 //(without the path)
@@ -357,7 +357,7 @@ void addIndicator(int indicator, int colour) {
 void clearIndicators(int position, int length) {
 	execute(SCI_SETINDICATORCURRENT, baseIndicator);
 	execute(SCI_INDICATORCLEARRANGE, position, length);
-	
+
 	size_t size = vExternalInfo.size();
 	for(size_t i = 0; i < size; i++) {
 		execute(SCI_SETINDICATORCURRENT, vExternalInfo[i]->slotValue+baseIndicator+1);
@@ -487,13 +487,13 @@ void performPacket(Socket * sock, Packet * packet) {
 			FilePacket * filePacket = (FilePacket*)packet;
 
 		#ifdef UNICODE
-			//::SendMessage(nppData._nppHandle, NPPM_INTERNAL_SETFILENAME, (WPARAM)shareBufferID, (LPARAM)filePacket->getName());
+			::SendMessage(nppData._nppHandle, /*NPPM_INTERNAL_SETFILENAME*/NPPMSG + 63, (WPARAM)shareBufferID, (LPARAM)filePacket->getName());
 		#else
 			//int len = stringLenW((wchar_t*)textData);
 			int len = ::WideCharToMultiByte(CP_ACP, 0, filePacket->getName(), -1, NULL, 0, NULL, NULL);
 			char * ansiName = new char[len+1];
 			::WideCharToMultiByte(CP_ACP, 0, filePacket->getName(), -1, ansiName, len+1, NULL, NULL);
-			::SendMessage(nppData._nppHandle, NPPM_INTERNAL_SETFILENAME, (WPARAM)shareBufferID, (LPARAM)ansiName);
+			::SendMessage(nppData._nppHandle, /*NPPM_INTERNAL_SETFILENAME*/NPPMSG + 63, (WPARAM)shareBufferID, (LPARAM)ansiName);
 			delete [] ansiName;
 		#endif
 
@@ -542,7 +542,7 @@ void performPacket(Socket * sock, Packet * packet) {
 				}
 				err(same?TEXT("same"):TEXT("different"));
 
-				hpkt->release();		
+				hpkt->release();
 			}
 			return;
 			break; }
@@ -768,7 +768,7 @@ void onDisconnect(Socket * sock) {
 		delete pInfo->queue;
 		delete pInfo->client;
 		delete pInfo;
-		
+
 		vExternalInfo.erase(vExternalInfo.begin()+index);
 	}
 
@@ -814,7 +814,7 @@ DWORD WINAPI waitForClient(LPVOID param) {
 		::SendMessage(hDialog, WM_STATUSMESSAGE, 0, (LPARAM)TEXT("Unable to listen for client"));
 	}
 	::SendMessage(hDialog, WM_CONNECTIONEVENT, 0, (LPARAM)client);
-	
+
 	return 0;
 }
 
@@ -833,7 +833,7 @@ DWORD WINAPI connectToServer(LPVOID param) {
 		client = NULL;
 	}
 	::SendMessage(hDialog, WM_CONNECTIONEVENT, 0, (LPARAM)client);
-	
+
 	return 0;
 }
 
@@ -999,7 +999,7 @@ INT_PTR CALLBACK ShareDialogLoop(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
 
 			textlen = (int)::SendMessage(hEditText,WM_GETTEXTLENGTH,0,0);
 			::SendMessage(hEditText,EM_SETSEL,(WPARAM)textlen,(LPARAM)textlen);
-			
+
 
 #ifndef UNICODE
 			int ansiSize = ::WideCharToMultiByte(CP_ACP, 0, message, -1, NULL, 0, NULL, NULL);
@@ -1075,20 +1075,20 @@ void err(LPCTSTR str) {
 	MessageBox(nppData._nppHandle,str,TEXT("NppDocShare Error"),MB_OK);
 }
 
-void Error(LPTSTR lpszFunction) { 
+void Error(LPTSTR lpszFunction) {
 	LPVOID lpMsgBuf;
 	LPVOID lpDisplayBuf;
 	if (lpszFunction == NULL) {
 		lpszFunction = TEXT("Unknown function");
 	}
-	DWORD dw = GetLastError(); 
+	DWORD dw = GetLastError();
 
 	FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER|FORMAT_MESSAGE_FROM_SYSTEM|FORMAT_MESSAGE_IGNORE_INSERTS,NULL,dw,MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),(LPTSTR) &lpMsgBuf,0, NULL );
 
-	lpDisplayBuf = (LPVOID)LocalAlloc(LMEM_ZEROINIT,(lstrlen((LPCTSTR)lpMsgBuf)+lstrlen((LPCTSTR)lpszFunction)+40)*sizeof(TCHAR)); 
+	lpDisplayBuf = (LPVOID)LocalAlloc(LMEM_ZEROINIT,(lstrlen((LPCTSTR)lpMsgBuf)+lstrlen((LPCTSTR)lpszFunction)+40)*sizeof(TCHAR));
 	wsprintf((LPTSTR)lpDisplayBuf,TEXT("%s failed with error %d: %s"),lpszFunction, dw, (LPCTSTR)lpMsgBuf);
 
-	MessageBox(NULL, (LPCTSTR)lpDisplayBuf, TEXT("NppDocShare Error"), MB_OK); 
+	MessageBox(NULL, (LPCTSTR)lpDisplayBuf, TEXT("NppDocShare Error"), MB_OK);
 
 	LocalFree(lpMsgBuf);
 	LocalFree(lpDisplayBuf);
