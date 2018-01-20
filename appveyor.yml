@@ -35,21 +35,21 @@ after_build:
     - ps: >-
 
         if ($env:PLATFORM_INPUT -eq "x64") {
-            Push-AppveyorArtifact "$env:PLATFORM\$env:CONFIGURATION\NppDocShare.dll" -FileName NppDocShare.dll
+            #Push-AppveyorArtifact "$env:PLATFORM\$env:CONFIGURATION\NppDocShare.dll" -FileName NppDocShare.dll
         }
 
         if ($env:PLATFORM_INPUT -eq "Win32" ) {
-            Push-AppveyorArtifact "$env:CONFIGURATION\NppDocShare.dll" -FileName NppDocShare.dll
+            #Push-AppveyorArtifact "$env:CONFIGURATION\NppDocShare.dll" -FileName NppDocShare.dll
         }
 
         if ($($env:APPVEYOR_REPO_TAG) -eq "true" -and $env:CONFIGURATION -eq "Release" -and $env:PLATFORMTOOLSET -eq "v140_xp") {
             if($env:PLATFORM_INPUT -eq "x64"){
             $ZipFileName = "NppDocShare_$($env:APPVEYOR_REPO_TAG_NAME)_x64.zip"
-            7z a $ZipFileName "$($env:APPVEYOR_BUILD_FOLDER)\$env:PLATFORM_INPUT\$env:CONFIGURATION\*.dll"
+            7z a $ZipFileName "$($env:APPVEYOR_BUILD_FOLDER)\build\$env:PLATFORM_INPUT\$env:CONFIGURATION\*.dll"
             }
             if($env:PLATFORM_INPUT -eq "Win32"){
             $ZipFileName = "NppDocShare_$($env:APPVEYOR_REPO_TAG_NAME)_x86.zip"
-            7z a $ZipFileName "$($env:APPVEYOR_BUILD_FOLDER)\$env:CONFIGURATION\*.dll"
+            7z a $ZipFileName "$($env:APPVEYOR_BUILD_FOLDER)\build\$env:CONFIGURATION\*.dll"
             }
         }
 
