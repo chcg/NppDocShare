@@ -35,11 +35,10 @@ after_build:
     - cd "%APPVEYOR_BUILD_FOLDER%"
     - ps: >-
 
-
         Push-AppveyorArtifact "build\$env:PLATFORM\$env:CONFIGURATION\NppDocShare.dll" -FileName NppDocShare.dll
 
         if ($($env:APPVEYOR_REPO_TAG) -eq "true" -and $env:CONFIGURATION -eq "Release" -and $env:PLATFORMTOOLSET -eq "v142") {
-            $ZipFileName = "NppDocShare_$($env:APPVEYOR_REPO_TAG_NAME)_x64.zip"
+            $ZipFileName = "NppDocShare_$($env:APPVEYOR_REPO_TAG_NAME)_$($env:PLATFORM_INPUT).zip"
             7z a $ZipFileName "$($env:APPVEYOR_BUILD_FOLDER)\build\$env:PLATFORM_INPUT\$env:CONFIGURATION\*.dll"
         }
 
