@@ -6,6 +6,6 @@ unofficial repo with sourcecode from https://sourceforge.net/projects/npp-plugin
 Build Status
 ------------
 
-AppVeyor `VS2015` and `VS2017`  [![Build status](https://ci.appveyor.com/api/projects/status/hl3cd4t18pabsmq8?svg=true)](https://ci.appveyor.com/project/chcg/nppdocshare)
+AppVeyor `VS2019`  [![Build status](https://ci.appveyor.com/api/projects/status/hl3cd4t18pabsmq8?svg=true)](https://ci.appveyor.com/project/chcg/nppdocshare)
 
 

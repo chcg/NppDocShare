@@ -75,7 +75,7 @@ bool ServerSocket::initiate() {
 }
 
 Socket * ServerSocket::listenForClient(unsigned int timeout) {
-	SOCKADDR_IN sa;
+	SOCKADDR_IN sa{};
 	int size = sizeof(SOCKADDR_IN);
 
 	this->m_iTimeoutVal = timeout;

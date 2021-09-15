@@ -162,7 +162,7 @@ extern "C" __declspec(dllexport) void beNotified(SCNotification *notifyCode) {
 			case NPPN_TBMODIFICATION: {	//Notepad++ requests any toolbar icons, register them now
 				if (!initializedPlugin)								//If the plugin failed to initialize, do not add the button
 					return;
-				toolbarIcons tbiToolbar;
+				toolbarIcons tbiToolbar{};
 				HBITMAP hToolbarBitmap = ::CreateMappedBitmap(hDLL,IDB_BITMAP_TOOLBAR,0,0,0);
 				tbiToolbar.hToolbarBmp = hToolbarBitmap;			//Give the handle to the bitmap used for the toolbar
 				tbiToolbar.hToolbarIcon = NULL;						//The icon handle is unused
@@ -565,7 +565,7 @@ void performPacket(Socket * sock, Packet * packet) {
 	//From here on only TextPackets
 	TextPacket * textPacket = (TextPacket*)packet;
 
-	DocEvent externalEvent;
+	DocEvent externalEvent{};
 	externalEvent.isInsert = (packet->getType() == PacketInsert);
 	externalEvent.length = textPacket->getLength();
 	externalEvent.position = textPacket->getPosition();
@@ -621,7 +621,7 @@ void sendDownloadData(size_t clientIndex) {
 	TextPacket * pdld = new TextPacket(PacketDownload);
 	pdld->setPosition(0);
 
-	wchar_t fileName[MAX_PATH];
+	wchar_t fileName[MAX_PATH]{};
 #ifdef UNICODE
 	::SendMessage(nppData._nppHandle, NPPM_GETFILENAME, MAX_PATH, (LPARAM)fileName);
 #else
@@ -1076,8 +1076,7 @@ void err(LPCTSTR str) {
 }
 
 void Error(LPTSTR lpszFunction) {
-	LPVOID lpMsgBuf;
-	LPVOID lpDisplayBuf;
+	LPVOID lpMsgBuf = nullptr;
 	if (lpszFunction == NULL) {
 		lpszFunction = TEXT("Unknown function");
 	}
@@ -1085,7 +1084,7 @@ void Error(LPTSTR lpszFunction) {
 
 	FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER|FORMAT_MESSAGE_FROM_SYSTEM|FORMAT_MESSAGE_IGNORE_INSERTS,NULL,dw,MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),(LPTSTR) &lpMsgBuf,0, NULL );
 
-	lpDisplayBuf = (LPVOID)LocalAlloc(LMEM_ZEROINIT,(lstrlen((LPCTSTR)lpMsgBuf)+lstrlen((LPCTSTR)lpszFunction)+40)*sizeof(TCHAR));
+	LPVOID lpDisplayBuf = (LPVOID)LocalAlloc(LMEM_ZEROINIT,(lstrlen((LPCTSTR)lpMsgBuf)+lstrlen((LPCTSTR)lpszFunction)+40)*sizeof(TCHAR));
 	wsprintf((LPTSTR)lpDisplayBuf,TEXT("%s failed with error %d: %s"),lpszFunction, dw, (LPCTSTR)lpMsgBuf);
 
 	MessageBox(NULL, (LPCTSTR)lpDisplayBuf, TEXT("NppDocShare Error"), MB_OK);

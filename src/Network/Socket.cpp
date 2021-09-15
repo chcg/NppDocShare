@@ -48,7 +48,7 @@ Socket::Socket(const char * pszAddress, int iPort) {
 
 //Assumes SOCKET is connected (mostly used for SOCKETs created by listen())
 Socket::Socket(SOCKET socket) {
-	SOCKADDR_IN sa;
+	SOCKADDR_IN sa{};
 	int sizesa = sizeof(SOCKADDR_IN);
 
 	int res = getpeername(socket, (sockaddr*)&sa, &sizesa);
