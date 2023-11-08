@@ -1,0 +1,44 @@
+name: CI_build
+
+on: [push, pull_request]
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        build_configuration: [Release, Debug]
+        build_platform: [x64, Win32, ARM64]
+        
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v4
+
+    - name: Add msbuild to PATH
+      uses: microsoft/setup-msbuild@v1
+
+    - name: MSBuild of plugin dll
+      working-directory: .\project
+      run: msbuild NppDocShare.vcxproj /m /p:configuration="${{ matrix.build_configuration }}" /p:platform="${{ matrix.build_platform }}"
+
+    - uses: olegtarasov/get-tag@v2.1.2
+      id: tagName
+
+    - name: zip artifacts for ${{ matrix.build_platform }}
+      if: matrix.build_configuration == 'Release'
+      run: 7z a NppDocShare_${{ steps.tagName.outputs.tag }}_${{ matrix.build_platform }}.zip .\build\${{ matrix.build_platform }}\${{ matrix.build_configuration }}\NppDocShare.dll
+
+    - name: Archive artifacts for ${{ matrix.build_platform }}
+      if: matrix.build_configuration == 'Release'
+      uses: actions/upload-artifact@v3
+      with:
+          name: NppDocShare_${{ steps.tagName.outputs.tag }}_${{ matrix.build_platform }}.zip
+          path: NppDocShare_${{ steps.tagName.outputs.tag }}_${{ matrix.build_platform }}.zip
+
+    - name: Create release on tagging
+      uses: softprops/action-gh-release@v1
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+          files: NppDocShare_${{ steps.tagName.outputs.tag }}_${{ matrix.build_platform }}.zip
+
