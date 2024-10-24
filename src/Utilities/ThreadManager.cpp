@@ -23,7 +23,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <utility>
 
 #define HMAP	std::map<HANDLE, const char *>
-#define THREADWAITTIMEOUT 5000
+constexpr auto THREADWAITTIMEOUT = 5000;
 HMAP threadMap;
 
 void threadError(const char * threadName);

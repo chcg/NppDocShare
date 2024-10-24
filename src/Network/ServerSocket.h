@@ -26,22 +26,22 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 class ServerSocket {
 private:
-	SOCKET m_hSocket;
-	int m_iError;
-	int m_iPort;
-	unsigned long selectedInterface;
+	SOCKET m_hSocket = INVALID_SOCKET;
+	int m_iError = 0;
+	int m_iPort = 0;
+	unsigned long selectedInterface = INADDR_ANY;
 	static int amount;
 public:
 	ServerSocket(int iPort);
 	void bindToInterface(const char * ip);
 	SOCKET & getSocket();
-	int getLastError();
+	int getLastError() const;
 	bool initiate();
 	Socket * listenForClient(unsigned int timeout);
-	int getPort();
+	int getPort() const;
 	~ServerSocket();
-	HANDLE m_hTimeoutWaitEvent;
-	unsigned int m_iTimeoutVal;
+	HANDLE m_hTimeoutWaitEvent = nullptr;
+	unsigned int m_iTimeoutVal = 0;
 };
 
 DWORD WINAPI serverSocketTimeoutCheck(LPVOID param);

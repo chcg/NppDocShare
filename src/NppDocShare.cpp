@@ -166,7 +166,7 @@ extern "C" __declspec(dllexport) void beNotified(SCNotification *notifyCode) {
 				HBITMAP hToolbarBitmap = ::CreateMappedBitmap(hDLL,IDB_BITMAP_TOOLBAR,0,0,0);
 				tbiToolbar.hToolbarBmp = hToolbarBitmap;			//Give the handle to the bitmap used for the toolbar
 				tbiToolbar.hToolbarIcon = NULL;						//The icon handle is unused
-				::SendMessage(nppData._nppHandle, NPPM_ADDTOOLBARICON, (WPARAM)funcItems[0]._cmdID, (LPARAM)&tbiToolbar);
+				::SendMessage(nppData._nppHandle, NPPM_ADDTOOLBARICON_DEPRECATED, (WPARAM)funcItems[0]._cmdID, (LPARAM)&tbiToolbar);
 				break; }
 			default:
 				break;
@@ -370,7 +370,7 @@ void createScintillaEnv() {
 }
 
 void destroyScintillaEnv() {
-	::SendMessage(nppData._nppHandle, NPPM_DESTROYSCINTILLAHANDLE, 0, (LPARAM)hScint);
+	::SendMessage(nppData._nppHandle, NPPM_DESTROYSCINTILLAHANDLE_DEPRECATED, 0, (LPARAM)hScint);
 	hScint = NULL;
 }
 
@@ -487,13 +487,13 @@ void performPacket(Socket * sock, Packet * packet) {
 			FilePacket * filePacket = (FilePacket*)packet;
 
 		#ifdef UNICODE
-			::SendMessage(nppData._nppHandle, /*NPPM_INTERNAL_SETFILENAME*/NPPMSG + 63, (WPARAM)shareBufferID, (LPARAM)filePacket->getName());
+			::SendMessage(nppData._nppHandle, NPPM_SETUNTITLEDNAME, (WPARAM)shareBufferID, (LPARAM)filePacket->getName());
 		#else
 			//int len = stringLenW((wchar_t*)textData);
 			int len = ::WideCharToMultiByte(CP_ACP, 0, filePacket->getName(), -1, NULL, 0, NULL, NULL);
 			char * ansiName = new char[len+1];
 			::WideCharToMultiByte(CP_ACP, 0, filePacket->getName(), -1, ansiName, len+1, NULL, NULL);
-			::SendMessage(nppData._nppHandle, /*NPPM_INTERNAL_SETFILENAME*/NPPMSG + 63, (WPARAM)shareBufferID, (LPARAM)ansiName);
+			::SendMessage(nppData._nppHandle, NPPM_SETUNTITLEDNAME, (WPARAM)shareBufferID, (LPARAM)ansiName);
 			delete [] ansiName;
 		#endif
 

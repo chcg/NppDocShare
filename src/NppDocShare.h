@@ -100,7 +100,7 @@ public:
 		return i;
 	};
 
-	bool hasSlot() {
+	bool hasSlot() const {
 		return slotsTaken < nrSlots;
 	};
 

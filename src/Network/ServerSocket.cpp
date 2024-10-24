@@ -121,11 +121,11 @@ SOCKET & ServerSocket::getSocket() {
 	return m_hSocket;
 }
 
-int ServerSocket::getLastError() {
+int ServerSocket::getLastError() const {
 	return m_iError;
 }
 
-int ServerSocket::getPort() {
+int ServerSocket::getPort() const {
 	return m_iPort;
 }
 

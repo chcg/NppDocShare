@@ -35,24 +35,24 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 class Socket {
 private:
-	char * m_pszAddress;
-	int m_iPort;
-	SOCKET m_hSocket;
-	unsigned int m_iTimeoutVal;
-	int m_iError;
-	bool connected;
+	char * m_pszAddress = nullptr;
+	int m_iPort = 0;
+	SOCKET m_hSocket = INVALID_SOCKET;
+	unsigned int m_iTimeoutVal = 0;
+	int m_iError = 0;
+	bool connected = false;
 
-	HANDLE m_hTimeoutWaitEvent;
-	HANDLE m_hTimeoutHostnameWaitEvent;
-	hostent * m_pHostent;
-	char * m_pHostBuffer;
-	bool hostnameSucces;
+	HANDLE m_hTimeoutWaitEvent = nullptr;
+	HANDLE m_hTimeoutHostnameWaitEvent = nullptr;
+	hostent * m_pHostent = nullptr;
+	char * m_pHostBuffer = nullptr;
+	bool hostnameSucces = false;
 public:
 	Socket(const char * pszAddress, int iPort);
 	Socket(SOCKET socket);
 	SOCKET & getSocket();
 	const char * getAddress();
-	int getLastError();
+	int getLastError() const;
 	bool connectClient(unsigned int timeout);
 	bool disconnect();
 	bool sendData(const char * data, int size);

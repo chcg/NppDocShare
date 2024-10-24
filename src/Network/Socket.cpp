@@ -241,7 +241,7 @@ const char * Socket::getAddress() {
 	return m_pszAddress;
 }
 
-int Socket::getLastError() {
+int Socket::getLastError() const {
 	return m_iError;
 }
 
