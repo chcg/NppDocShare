@@ -296,7 +296,7 @@ bool DocView::performExternalEvent(DocEvent * externalEvent) {
 	return true;
 }
 
-bool DocView::performExternalInsert(DocRange * local, DocRange * external) {
+bool DocView::performExternalInsert(DocRange * local, DocRange * external) const {
 	//Things the insert might encounter:
 	//Deleted text: go to the right of it (since doesnt exist anymore and see what has happened there)
 	//Inserted text: use precedence

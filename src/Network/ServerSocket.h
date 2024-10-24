@@ -30,7 +30,6 @@ private:
 	int m_iError = 0;
 	int m_iPort = 0;
 	unsigned long selectedInterface = INADDR_ANY;
-	static int amount;
 public:
 	ServerSocket(int iPort);
 	void bindToInterface(const char * ip);

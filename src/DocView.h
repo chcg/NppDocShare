@@ -113,7 +113,7 @@ public:
 	void setLocalPrecedence(int precedence);
 	void setExternalPrecedence(int precedence);
 
-	unsigned int getTimestamp() { return _currentTimestamp; };	//TODO: make this allow overflowing (probably never going to happen though)
+	unsigned int getTimestamp() const { return _currentTimestamp; };	//TODO: make this allow overflowing (probably never going to happen though)
 private:
 	bool _isLoaded;	//true if the current document has been loaded (either local text or sent via download)
 
@@ -135,7 +135,7 @@ private:
 	int findDocRangePosition(DocRange * range);
 
 	//external will be inserted into document chain
-	bool performExternalInsert(DocRange * local, DocRange * external);
+	bool performExternalInsert(DocRange * local, DocRange * external) const;
 	//external will not be inserted but filled with deletion data
 	bool performExternalDelete(DocRange * local, DocRange * external);
 
