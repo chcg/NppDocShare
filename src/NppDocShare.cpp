@@ -50,6 +50,7 @@ BOOL APIENTRY DllMain(HANDLE hModule,DWORD ul_reason_for_call,LPVOID lpReserved)
 			int res = WSAStartup(version, pwsadata);	//0 on success
 			if (res != 0) {
 				Error(TEXT("WSAStartup"));
+				delete pwsadata;
 				return FALSE;
 			}
 			delete pwsadata;
@@ -127,11 +128,11 @@ extern "C" __declspec(dllexport) FuncItem * getFuncsArray(int *nbF) {
 }
 
 extern "C" __declspec(dllexport) void beNotified(SCNotification *notifyCode) {
-	if ((
+	if (
 		 //(notifyCode->nmhdr.hwndFrom == nppData._scintillaMainHandle) ||
 		 //(notifyCode->nmhdr.hwndFrom == nppData._scintillaSecondHandle)
-		 (notifyCode->nmhdr.hwndFrom == hScint)
-		)) {
+		 notifyCode->nmhdr.hwndFrom == hScint
+		) {
 		if (!connected)
 			return;
 		switch (notifyCode->nmhdr.code) {
@@ -1044,7 +1045,7 @@ LRESULT ChatEditProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 		case WM_GETDLGCODE:
 			return (DLGC_WANTALLKEYS | CallWindowProc(lpOldProc, hWnd, uMsg, wParam, lParam));
 		case WM_CHAR:
-			if ((wParam == VK_RETURN)) {
+			if (wParam == VK_RETURN) {
 				SHORT state = ::GetKeyState(VK_CONTROL);
 				if (!(state & 0x8000)) {	//if control is depressed, insert newline, otherwise send the message
 					return 0;
@@ -1052,7 +1053,7 @@ LRESULT ChatEditProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 			}
 			break;
 		case WM_KEYDOWN:
-			if ((wParam == VK_RETURN)) {
+			if (wParam == VK_RETURN) {
 				SHORT state = ::GetKeyState(VK_CONTROL);
 				if (!(state & 0x8000)) {	//if control is depressed, insert newline, otherwise send the message
 					::PostMessage (hDialog, WM_COMMAND, (WPARAM)IDC_BTN_SEND, 0L);
@@ -1075,7 +1076,7 @@ void err(LPCTSTR str) {
 	MessageBox(nppData._nppHandle,str,TEXT("NppDocShare Error"),MB_OK);
 }
 
-void Error(LPTSTR lpszFunction) {
+void Error(LPCTSTR lpszFunction) {
 	LPVOID lpMsgBuf = nullptr;
 	if (lpszFunction == NULL) {
 		lpszFunction = TEXT("Unknown function");

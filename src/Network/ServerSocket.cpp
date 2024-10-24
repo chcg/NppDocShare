@@ -62,10 +62,10 @@ bool ServerSocket::initiate() {
 		return false;
 	}
 
-	u_short port;			//get bound port
+	//get bound port
 	int len = sizeof(sin);
 	getsockname(m_hSocket, (sockaddr*)&sin , &len);
-	m_iPort = port = ntohs(sin.sin_port);
+	m_iPort = ntohs(sin.sin_port);
 
 	if (listen(m_hSocket, 10)) {										//start listening
 		this->m_iError = WSAGetLastError();

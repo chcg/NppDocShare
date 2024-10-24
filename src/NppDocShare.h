@@ -127,7 +127,7 @@ struct ExternalInfo {
 	PacketQueue * queue;
 	int acceptedPackets;
 	int slotValue;
-	ExternalInfo() : client(NULL), view(NULL), queue(NULL), token(999), acceptedPackets(0), slotValue(-1) {};
+	ExternalInfo() : client(NULL), token(999), view(NULL), queue(NULL), acceptedPackets(0), slotValue(-1) {};
 };
 std::vector<ExternalInfo*> vExternalInfo;
 #define INVALID_CLIENT_INDEX	0x8000
@@ -219,7 +219,7 @@ LRESULT ChatEditProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 LRESULT execute(UINT msg, WPARAM = 0, LPARAM = 0);
 
 void err(LPCTSTR str);
-void Error(LPTSTR lpszFunction);
+void Error(LPCTSTR lpszFunction);
 
 void clearmem(void * block, int size);	//LIBCTINY has no _memset
 

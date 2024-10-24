@@ -19,8 +19,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "DocView.h"
 
-DocRange::DocRange() : len(0), nextRange(NULL), prevRange(NULL),
-type(DocRangeConfirmed), timestamp(0), splitOffset(0)
+DocRange::DocRange() : type(DocRangeConfirmed), len(0), splitOffset(0),
+timestamp(0), nextRange(NULL), prevRange(NULL)
 {
 }
 
@@ -513,6 +513,8 @@ void DocView::clearUntillTimestamp(unsigned int timestamp) {
 
 void DocView::doFullMerge() {
 	DocRange * firstMerge = _currentDocument->nextRange;
+	if (!firstMerge)
+		return;
 	DocRange * secondMerge = firstMerge->nextRange;
 	if (!secondMerge)
 		return;

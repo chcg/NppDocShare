@@ -130,7 +130,7 @@ bool Packet::sendPacketToNetwork(Socket * sock, Packet * packet) {
 }
 
 Packet::Packet(PacketType type) :
-	_type(type), _isSet(false), _refCount(1)
+	_refCount(1), _type(type), _isSet(false)
 {}
 
 Packet::~Packet() {
@@ -170,7 +170,7 @@ TextPacket::TextPacket(PacketType type) : Packet(type) {
 
 TextPacket::~TextPacket() {
 	if (_text)
-		delete _text;
+		delete [] _text;
 }
 
 void TextPacket::setText(const char * text, unsigned int len) {
@@ -267,7 +267,7 @@ FilePacket::FilePacket() : Packet(PacketFile) {
 
 FilePacket::~FilePacket() {
 	if (_name)
-		delete _name;
+		delete [] _name;
 }
 
 void FilePacket::setName(const wchar_t * name, int len) {

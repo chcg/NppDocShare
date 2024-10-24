@@ -61,8 +61,8 @@ public:
 	~Socket();
 
 	//Made public for threads, dont call
-	void Socket::timeoutThread();
-	void Socket::hostnameThread();
+	void timeoutThread();
+	void hostnameThread();
 
 	static int amount;
 };
